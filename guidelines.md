@@ -4,10 +4,10 @@ Vous travaillerez sur les données METAR. Je vous laisse explorer les données. 
 
 ## Planning plus précis :
 
-    - Semaine A6: les questions précises seront définies.
-    - Semaine B6: les serveurs peuvent commencer à être utilisés pour le projet. Les données précises et la zone géographique est définie.
-    - Semaine A7:
-    - Semaine B7: La séance de TD est consacrée au projet.
+    - Semaine A6 (24/05): les questions précises seront définies.
+    - Semaine B6 (31/05): les serveurs peuvent commencer à être utilisés pour le projet. Les données précises et la zone géographique est définie.
+    - Semaine A7 (7/06):
+    - Semaine B7 (21/06): La séance de TD est consacrée au projet.
     - 24 juin à 0h00: date limite de rendu du rapport. Date limite de rendu des slides pour la soutenance.
     - 24 juin au 28 juin: soutenances orales. Je vous enverrai un sondage, vous pourrez indiquer vos disponibilités et vos préférences. Je tenterai de satisfaire au mieux vos préférences.
 
