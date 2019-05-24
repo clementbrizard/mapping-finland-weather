@@ -10,19 +10,19 @@ $ ssh login@nf26-3.leger.tf
 ```
 
 ## Changer son mot de passe
-```
+```bash
 $ passwd login
 ```
 
 ## cqlsh
-```
+```bash
 $ cqlsh
 $ cqlsh> CREATE KEYSPACE login_demo_td76 WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 2};
 $ cqlsh> use login_demo_td76 ;
 ```
 
 ## Exécuter un fichier python
-```
+```bash
 $ ipython
 $ In [1]: %run test.py
 ```
