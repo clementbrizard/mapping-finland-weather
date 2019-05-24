@@ -5,6 +5,7 @@
 ## Connect to server
 ```
 $ ssh login@nf26-3.leger.tf
+$ cqlsh
 
 ```
 
