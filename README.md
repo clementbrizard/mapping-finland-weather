@@ -12,7 +12,7 @@ $ cqlsh> use login_demo_td76 ;
 
 ```
 
-## Mount distant server
+## Changer son mot de passe
 ```
-sftp://login@nf26-3.leger.tf/home/<local login>
+$ passwd login
 ```
