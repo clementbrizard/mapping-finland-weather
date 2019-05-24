@@ -9,10 +9,15 @@ $ sshfs cbrizard@nf26-3.leger.tf: directory
 $ cqlsh
 $ cqlsh> CREATE KEYSPACE login_demo_td76 WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 2};
 $ cqlsh> use login_demo_td76 ;
-
 ```
 
 ## Changer son mot de passe
 ```
 $ passwd login
+```
+
+## Exécuter un fichier python
+```
+$ ipython
+$ In [1]: %run test.py
 ```
