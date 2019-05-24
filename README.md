@@ -9,6 +9,11 @@ $ sshfs login@nf26-3.leger.tf: directory
 $ ssh login@nf26-3.leger.tf
 ```
 
+## Unmount directory
+```bash
+$ fusermount -u directory
+```
+
 ## Changer son mot de passe
 ```bash
 $ passwd login
