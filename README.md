@@ -1,33 +1,6 @@
-# nf26-metar
+# Projet NF26
 
-[METAR](https://en.wikipedia.org/wiki/METAR)
+Rapport : https://www.overleaf.com/project/5d0c82e65eb64412f27e9252 
 
-## Connect to server
-Se placer dans le répertoire local où se trouve le directory que l'on souhaite monter vers le serveur puis :
-```bash
-$ sshfs login@nf26-3.leger.tf: directory
-$ ssh login@nf26-3.leger.tf
-```
+Diapo : https://www.overleaf.com/project/5d0a43d9cecfcb535c8a8a65
 
-## Unmount directory
-```bash
-$ fusermount -u directory
-```
-
-## Changer son mot de passe
-```bash
-$ passwd login
-```
-
-## cqlsh
-```bash
-$ cqlsh
-$ cqlsh> CREATE KEYSPACE login_demo_td76 WITH replication = {'class': 'SimpleStrategy', 'replication_factor': 2};
-$ cqlsh> use login_demo_td76 ;
-```
-
-## Exécuter un fichier python
-```bash
-$ ipython
-$ In [1]: %run test.py
-```
