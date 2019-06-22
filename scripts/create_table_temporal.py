@@ -38,7 +38,7 @@ def create_table_temporal (session):
             peak_wind_time float,
             feel float,
             metar text,
-            PRIMARY KEY ((year, month), station, day, hour, minute)
+            PRIMARY KEY ((year, month), day, hour, minute, station)
         );
     '''
 

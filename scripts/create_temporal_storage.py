@@ -7,13 +7,13 @@ print("Connection to keyspace done")
 #%%
 # Create table template
 from create_table_temporal import create_table_temporal
-#create_table_temporal(session)
+create_table_temporal(session)
 print("Table creation done")
 
 #%%
 # Load data
 from load_data import load_data
-data = load_data("asos.txt")
+data = load_data("../asos.txt")
 print("Data loading done")
 
 #%%
