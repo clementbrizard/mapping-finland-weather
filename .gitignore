@@ -3,4 +3,6 @@
 .DS_Store
 ._*
 asos.txt
-.png
+*.png
+
+*.pyc
