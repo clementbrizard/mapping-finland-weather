@@ -83,5 +83,3 @@ def write_cassandra(session, data):
         )
 
         session.execute(query, t)
-        if (tmp == 1261440):
-            return
