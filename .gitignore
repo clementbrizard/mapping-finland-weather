@@ -2,7 +2,12 @@
 .ipynb_checkpoints
 .DS_Store
 ._*
-asos.txt
 *.png
 
 *.pyc
+
+cheatsheet.md
+guidelines.md
+projet.md
+
+*.txt
