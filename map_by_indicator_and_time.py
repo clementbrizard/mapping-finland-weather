@@ -60,7 +60,7 @@ def map_by_indicator_and_time(indicator, date, hour):
             else:
                 dict_by_station[station] = (dict_by_station[station] + val) / 2
 
-    logging.info('{} stations had data for this date :'.format(len(vals)))
+    logging.info('{} stations had data for this date :'.format(len(dict_by_station)))
     for key, value in dict_by_station.items():
         vals.append(value)
         print('{} : {}'.format(key, round(value, 1)))
