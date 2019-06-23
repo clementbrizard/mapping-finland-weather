@@ -33,7 +33,7 @@ def extract_data(start, end):
     session = cluster.connect('finland_weather_metar')
 
     query = '''
-        SELECT station, latitude, longitude, temperature_fahrenheit
+        SELECT station, latitude, longitude, temperature_fahrenheit, dew_point_temperature, feel
         FROM temporal
         WHERE year >= ''' + str(start_data['year']) + '''
         AND month >= ''' + str(start_data['month']) + '''
@@ -52,12 +52,15 @@ def extract_data(start, end):
         latitude = r[1]
         longitude = r[2]
         temperature = r[3]
-        if (station and latitude and longitude and temperature):
-            yield r
+        dew_point = r[4]
+        feel = r[5]
+        if (station and latitude and longitude and temperature and dew_point and feel):
+            data = {'station': station, 'latitude': latitude, 'longitude': longitude, 'temperature': temperature, 'dew_point': dew_point, 'feel': feel}
+            yield data
 
 def calc_moy_key(data):
-    (key, (n, total)) = data
-    return ([key, total/n])
+    (key, (n, total_temp, total_dew_point, total_feel)) = data
+    return ([key, round(total_temp/n, 1), round(total_dew_point/n, 1), round(total_feel/n, 1)])
 
 def cluster_by_period(start, end):
 
@@ -65,16 +68,16 @@ def cluster_by_period(start, end):
     D = sc.parallelize(extract_data(start, end))
 
     # Compute mean temperature by station
-    map = D.map(lambda data: ((data[0], data[1], data[2]), np.array([1, data[3]])))
-    sum_temp_by_station = map.reduceByKey(lambda a, b : a + b)
+    map = D.map(lambda data: ((data['station'], data['latitude'], data['longitude']), np.array([1, data['temperature'], data['dew_point'], data['feel']])))
+    sum_by_station = map.reduceByKey(lambda a, b : a + b)
 
-    mean_temp_by_station = sum_temp_by_station.map(calc_moy_key)
+    mean_by_station = sum_by_station.map(calc_moy_key)
 
     # KMeans
     # Fist we determine the optimal k with elbow method
     logging.info('Clustering...')
-    X = mean_temp_by_station.map(lambda data: data[1])
-    X = np.array(X.collect()).reshape(-1, 1)
+    X = mean_by_station.map(lambda data: [data[1], data[2]])
+    X = np.array(X.collect())
     sum_of_squared_distances = []
     K = range(1,10)
     for k in K:
@@ -108,7 +111,7 @@ def cluster_by_period(start, end):
     lats=[]
     vals=km.labels_
 
-    for val in mean_temp_by_station.collect():
+    for val in mean_by_station.collect():
         lats.append(val[0][1])
         lons.append(val[0][2])
 
@@ -121,9 +124,9 @@ def cluster_by_period(start, end):
 
     x, y = map(lons, lats)
 
-    map.scatter(x, y, c = vals, cmap = plt.cm.get_cmap('Set1', kn.knee), zorder = 2)
+    map.scatter(x, y, c = vals, cmap = plt.cm.get_cmap('gist_rainbow', kn.knee), zorder = 2)
 
-    plt.title('Clustering des stations (sur la température) entre {} et {}'.format(start, end))
+    plt.title('Clustering des stations entre {} et {}'.format(start, end), fontsize = 10)
 
     if os.path.isfile('clusters_map.png'):
         os.remove('clusters_map.png')
