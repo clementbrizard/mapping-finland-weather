@@ -95,9 +95,10 @@ def cluster_by_period(start, end):
     plt.plot(x, y, 'bx-')
     plt.vlines(kn.knee, plt.ylim()[0], plt.ylim()[1], linestyles='dashed')
 
-    if os.path.isfile('elbow.png'):
-        os.remove('elbow.png')
-    plt.savefig('elbow.png')
+    filename = 'results/cluster_by_period/{}_{}_elbow.png'.format(start, end)
+    if os.path.isfile(filename):
+        os.remove(filename)
+    plt.savefig(filename)
     plt.clf()
 
     # Then we cluster with the computed optimal k
@@ -128,11 +129,12 @@ def cluster_by_period(start, end):
 
     plt.title('Clustering des stations entre {} et {}'.format(start, end), fontsize = 10)
 
-    if os.path.isfile('clusters_map.png'):
-        os.remove('clusters_map.png')
-    plt.savefig('clusters_map.png')
+    filename = 'results/cluster_by_period/{}_{}.png'.format(start, end)
+    if os.path.isfile(filename):
+        os.remove(filename)
+    plt.savefig(filename)
 
-    logging.info('Success : update your files and check \'clusters_map.png\' !')
+    logging.info('Success : update your files and check the result in \'results/cluster_by_period\' !')
     logging.info('NB : you can also check \'elbow.png\' to see how we chose the clusters number.')
     plt.clf()
 

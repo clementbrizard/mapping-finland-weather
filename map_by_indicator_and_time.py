@@ -83,11 +83,12 @@ def map_by_indicator_and_time(indicator, date, hour):
 
     plt.title('{} in Finland the {} at {}H'.format(indicator, date, hour))
 
-    if os.path.isfile('indicator_map.png'):
-        os.remove('indicator_map.png')
-    plt.savefig('indicator_map.png')
+    filename = 'results/map_by_indicator/{}_{}_{}'.format(indicator, date, hour)
+    if os.path.isfile(filename):
+        os.remove(filename)
+    plt.savefig(filename)
 
-    logging.info('Success : update your files and check \'indicator_map.png\' !')
+    logging.info('Success : update your files and check the result in \'results/map_by_indicator\' !')
     plt.clf()
 
 map_by_indicator_and_time(sys.argv[1], sys.argv[2], sys.argv[3])
