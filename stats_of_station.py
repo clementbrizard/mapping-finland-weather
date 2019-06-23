@@ -9,7 +9,6 @@ from statsmodels.tsa.seasonal import seasonal_decompose
 import matplotlib.pyplot as plt
 from pyspark import SparkContext
 from pyspark.sql import SQLContext
-from windrose import WindroseAxes
 
 
 # Init environment PySpark
