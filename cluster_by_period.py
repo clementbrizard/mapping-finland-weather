@@ -15,19 +15,6 @@ from matplotlib.colors import Colormap
 logging.getLogger().setLevel(logging.INFO)
 
 def extract_data(start, end):
-    # Check parameters
-    dateparser = re.compile("(?P<year>\d+)-(?P<month>\d+)-(?P<day>\d+)")
-
-    start_parsed = dateparser.match(start)
-    end_parsed = dateparser.match(end)
-
-    if not start_parsed or not end_parsed:
-        logging.critical('Les dates doivent être au format year-month-day.')
-        return
-
-    start_data = start_parsed.groupdict()
-    end_data = end_parsed.groupdict()
-
     # Extract data
     cluster = Cluster()
     session = cluster.connect('finland_weather_metar')
@@ -35,12 +22,8 @@ def extract_data(start, end):
     query = '''
         SELECT station, latitude, longitude, temperature_fahrenheit, dew_point_temperature, feel
         FROM temporal
-        WHERE year >= ''' + str(start_data['year']) + '''
-        AND month >= ''' + str(start_data['month']) + '''
-        AND day >= ''' + str(start_data['day']) + '''
-        AND year <= ''' + str(end_data['year']) + '''
-        AND month <= ''' + str(end_data['month']) + '''
-        AND day <= ''' + str(end_data['day']) + '''
+        WHERE year >= ''' + str(start) + '''
+        AND year <= ''' + str(end) + '''
         ALLOW FILTERING;
     '''
 
@@ -72,6 +55,9 @@ def cluster_by_period(start, end):
     sum_by_station = map.reduceByKey(lambda a, b : a + b)
 
     mean_by_station = sum_by_station.map(calc_moy_key)
+    if (len(mean_by_station.collect()) < 2):
+        logging.warning('Only data for one station during this period, so there is one cluster of one station !')
+        return
 
     # KMeans
     # Fist we determine the optimal k with elbow method
