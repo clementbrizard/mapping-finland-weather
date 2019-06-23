@@ -2,7 +2,6 @@
 .ipynb_checkpoints
 .DS_Store
 ._*
-asos.txt
 *.png
 
 *.pyc
@@ -10,3 +9,5 @@ asos.txt
 cheatsheet.md
 guidelines.md
 projet.md
+
+*.txt
