@@ -65,5 +65,5 @@ $ source /pyspark.env
 $ pyspark
 In [1]: %run cluster_by_period yyyy yyyy
 ```
-A period is considered as a range of years. The first argument is the start year, the second one is the end year. **Find the map in `results/cluster_by_period`**
+A period is considered as a range of years. The first argument is the start year, the second one is the end year. You should better specify an end year greater than 2009 as we only have data for one station until 2010. **Find the map in `results/cluster_by_period`**.
 
