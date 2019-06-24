@@ -2,7 +2,7 @@
 
 - Keyspace name : `finland_weather_metar`
 - Columns family name for question 1 : `spatial`
-- Columns family name for question 1 : `temporal`
+- Columns family name for question 2 and 3 : `temporal`
 
 ## Exercise 1 : stats for a given place
 
