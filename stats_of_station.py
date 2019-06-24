@@ -9,7 +9,6 @@ from statsmodels.tsa.seasonal import seasonal_decompose
 import matplotlib.pyplot as plt
 from pyspark import SparkContext
 from pyspark.sql import SQLContext
-from windrose import WindroseAxes
 
 
 # Init environment PySpark
@@ -101,7 +100,7 @@ def requete_interval(station, indicateur, from_year=2005, to_year=2014):
     heat_map_tab = Tmp.pivot_table(index="month", columns="year",values="mean", aggfunc="sum").fillna(0)
     heat_map = sns.heatmap(heat_map_tab) # annot=True
     heat_map.set(title="Mean of {} in {} ({}-{})".format(indicateur, station, from_year, to_year))
-    heat_map.get_figure().savefig('{}-heatmap-{}-{}-{}.png'.format(station, indicateur, from_year, to_year))
+    heat_map.get_figure().savefig('results/stats/{}-heatmap-{}-{}-{}.png'.format(station, indicateur, from_year, to_year))
 
     Tmp = Tmp.set_index('date')
     # print(Tmp)
@@ -113,13 +112,13 @@ def requete_interval(station, indicateur, from_year=2005, to_year=2014):
     line = Tmp['mean'].plot(linewidth=0.5, label='mean').get_figure()
     line = Tmp['max'].plot(linewidth=0.5, marker='.', label='max').get_figure()
     line.legend()
-    line.savefig("{}-lineplot-{}-{}-{}.png".format(station, indicateur, from_year, to_year))
+    line.savefig("results/stats/{}-lineplot-{}-{}-{}.png".format(station, indicateur, from_year, to_year))
 
     # Seasonality
     plt.close()
     season = Tmp.pivot_table(index="date", values="mean", aggfunc="sum").fillna(0)
     season = seasonal_decompose(season, model='additive', freq=4)
-    season.plot().savefig("{}-seasonality-{}-{}-{}.png".format(station, indicateur, from_year, to_year))
+    season.plot().savefig("results/stats/{}-seasonality-{}-{}-{}.png".format(station, indicateur, from_year, to_year))
 
 
 def requete_in_year(station, indicateur, year=2010):
@@ -135,7 +134,7 @@ def requete_in_year(station, indicateur, year=2010):
     Data_Trimester = pd.DataFrame(Data_Trimester).sort_values(by=0)
 
     if Data_Trimester.empty:
-        print("Empty data. No result")
+        print("Empty data in trimester. No result")
         return
 
     Data_Trimester.columns = ['date', 'mean', 'min', 'max', 'std']
@@ -147,8 +146,9 @@ def requete_in_year(station, indicateur, year=2010):
     Data_Month = np.array(Data_Month.collect())
     Data_Month = pd.DataFrame(Data_Month).sort_values(by=0)
     if Data_Month.empty:
-        print("Empty data. No result")
+        print("Empty data in month. No result")
         return
+
     Data_Month.columns = ['date', 'mean', 'min', 'max', 'std']
     Data_Month['month'] = Data_Month['date'].apply(lambda x: int(x[1]))
     Data_Month['year'] = Data_Month['date'].apply(lambda x: int(x[0]))
@@ -161,7 +161,6 @@ def requete_in_year(station, indicateur, year=2010):
     line = Data_Month['min'].plot(linewidth=0.5, marker='.', label='min').get_figure()
     line = Data_Month['mean'].plot(linewidth=0.5, marker='', label='mean').get_figure()
     line = Data_Month['max'].plot(linewidth=0.5, marker='.', label='max').get_figure()
-    # plt.savefig("{}-{}-{}.png".format(station, indicateur, year))
 
     plt.subplot(2, 1, 2)
     plt.xlabel("trimester")
@@ -169,7 +168,7 @@ def requete_in_year(station, indicateur, year=2010):
     plt.errorbar(Data_Trimester['trimester'], Data_Trimester['mean'], [Data_Trimester['mean'] - Data_Trimester['min'], Data_Trimester['max'] - Data_Trimester['mean']], 
                  fmt='.k', ecolor='gray', lw=1)
     plt.tight_layout()
-    plt.savefig("{}-{}-{}.png".format(station, indicateur, year))
+    plt.savefig("results/stats/{}-{}-{}.png".format(station, indicateur, year))
 
 
 def requete_lon_lat_interval(lon, lat, indicateur, from_year, to_year):
@@ -183,16 +182,24 @@ def requete_lon_lat_in_year(lon, lat, indicateur, year):
 
 
 if __name__ == "__main__":
-    # List indicateurs most used
-    # temperature_fahrenheit
-    # dew_point_temperature
-    # relative_humidity
-    # wind_direction
-    # wind_speed
-    # one_hour_precipitation
-    # pressure_altimeter
-
-    # plot_temperature("EFKI", from_year=None, to_year=None, year = 2005)
-    # requete_interval("EFKI", indicateur="dew_point_temperature", from_year=2008, to_year=2012)
-    # requete_interval("EFKI", indicateur="wind_speed", from_year=2008, to_year=2012)
-    requete_in_year("EFMA", indicateur="temperature_fahrenheit", year=2010)
+    print("""
+List of some indicateurs useful :
+temperature_fahrenheit, dew_point_temperature, relative_humidity, wind_speed, one_hour_precipitation, ...
+List of stations are in 'station_list.txt'
+|
+Some examples of function :
+|
+---- Stats for a station in range of year
+requete_interval("EFKI", indicateur="dew_point_temperature", from_year=2006, to_year=2012)
+|
+---- Stats for a station in a year specific
+requete_in_year("EFMA", indicateur="temperature_fahrenheit", year=2010)
+|
+---- Stats for a (lon, lat) in range of year
+requete_lon_lat_interval(28.5, 61.5, "dew_point_temperature", from_year=2006, to_year=2012)
+|
+---- Stats for a (lon, lat) in a year specific
+requete_lon_lat_in_year(28.5, 61.5, "temperature_fahrenheit", year=2011)
+|
+*** Graphics created will be all in folder results/stats
+    """)
