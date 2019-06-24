@@ -13,27 +13,22 @@ $ ipython
 In [1]: %run stats_of_station.py
 ```
 
+### Examples of available functions :
+
+Once you have run the script, we will show you the available fonctions. You can copy-paste one in `ipython` and change the parameters.
+
 List of useful indicators :
 ```
 temperature_fahrenheit, dew_point_temperature, relative_humidity, wind_speed, one_hour_precipitation, ...
 ```
 
-List of stations in `station_list.txt`. Examples :
-```
-EFHK, EFMA, EFKA, EFSA, ...
-```
-
-### Examples of available functions :
-
 ---- Stats for a station in range of years
 ```console
-$ from stats_of_station import *
 $ requete_interval("EFKI", indicateur="dew_point_temperature", from_year=2006, to_year=2012)
 ```
 
 ---- Stats for a station in a specific year 
 ```console
-$ from stats_of_station import *
 $ requete_in_year("EFMA", indicateur="temperature_fahrenheit", year=2010)
 ```
 
@@ -45,7 +40,6 @@ $ requete_lon_lat_interval(28.5, 61.5, "dew_point_temperature", from_year=2006, 
 
 ---- Stats for a (lon, lat) in a specific year 
 ```console
-$ from stats_of_station import *
 $ requete_lon_lat_in_year(28.5, 61.5, "temperature_fahrenheit", year=2011)
 ```
 
