@@ -1,6 +1,6 @@
 # NF26 - METAR project
 
-Access to [pdf report](https://github.com/clementbrizard/mapping-finland-weather/blob/master/LE_BRIZARD_NF26_TD2-23-24_Rapport.pdf) and presentation
+Access to [pdf report](https://github.com/clementbrizard/mapping-finland-weather/blob/master/LE_BRIZARD_NF26_TD2-23-24_Rapport.pdf) and [presentation](https://github.com/clementbrizard/mapping-finland-weather/blob/master/LE_BRIZARD_NF26_TD2-23-24_Presentation.pdf).
 
 - Keyspace name : `finland_weather_metar`
 - Columns family name for question 1 : `spatial`
