@@ -1,5 +1,7 @@
 # NF26 - METAR project
 
+Access to pdf report and presentation
+
 - Keyspace name : `finland_weather_metar`
 - Columns family name for question 1 : `spatial`
 - Columns family name for questions 2 and 3 : `temporal`
