@@ -5,7 +5,7 @@ attrs==19.1.0
 backcall==0.1.0
 basemap==1.2.0
 black==19.3b0
-bleach==3.1.0
+bleach==3.3.0
 Cartopy==0.17.0
 cassandra-driver==3.17.1
 Click==7.0
